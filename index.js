@@ -25,14 +25,20 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date?", function (req, res) {
   const rawDate = req.params['date'];
+  console.log('rawdate', rawDate)
 
   if (!rawDate) {
+    console.log('empty date')
     const date = new Date();
 
-    return res.json({
+    const output = {
       'utc': date.toUTCString(),
-      'unix': Math.floor(date.getTime() / 1000),
-    });
+      'unix': Math.floor(date.getTime()),
+    }
+
+    console.log('empty date output', output)
+
+    return res.json(output);
   }
 
   let date;
@@ -48,7 +54,7 @@ app.get("/api/:date?", function (req, res) {
 
   res.json({
     'utc': date.toUTCString(),
-    'unix': Math.floor(date.getTime() / 1000),
+    'unix': Math.floor(date.getTime()),
   });
 });
 
