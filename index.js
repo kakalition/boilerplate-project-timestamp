@@ -25,15 +25,21 @@ app.get("/api/hello", function (req, res) {
 
 app.get("/api/:date", function (req, res) {
   const rawDate = req.params['date'];
-  console.log('raw', rawDate)
+
+  if (!rawDate) {
+    const date = new Date();
+
+    return res.json({
+      'utc': date.toUTCString(),
+      'unix': Math.floor(date.getTime() / 1000),
+    });
+  }
 
   let date;
   if (isNaN(rawDate)) {
     date = new Date(rawDate)
-    console.log('is not number')
   } else {
     date = new Date(parseInt(rawDate))
-    console.log('is number')
   }
 
   if (date == 'Invalid Date') {
